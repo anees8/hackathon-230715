@@ -4,7 +4,7 @@ import { useLoginStore } from "@/stores/login.js";
 const { user, errors, loading } = storeToRefs(useLoginStore());
 const { login, resetForm } = useLoginStore();
 
-resetForm();
+// resetForm();
 </script>
 <template>
     <BContainer fluid>
@@ -14,19 +14,21 @@ resetForm();
                     <BCol cols="12" class="text-center">
                         <h3>UBER <h6>for Tailors</h6></h3> 
                     </BCol>
+                    <BCol  v-if="errors && errors.error"  cols="12" class="text-center">
+                        <span  class="text-danger">{{ errors.error }}</span>
+                    </BCol>
                     <BCol cols="12">
-                        <span v-if="errors.error" class="text-danger text-center">{{ errors.error }}</span>
                         <BForm @submit="login" @reset="resetForm">
                             <BFormGroup class="mt-2" id="input-group-1" label="Email address:" label-for="input-1"
                               >
-                                <BFormInput  id="input-1" v-model="user.email" :class="errors.email ? 'is-invalid' : ''" :disabled="!loading ? false : true" type="email" placeholder="Enter email"
+                                <BFormInput  id="input-1" v-model="user.email" :class="errors && errors.email ? 'is-invalid' : ''" :disabled="!loading ? false : true" type="email" placeholder="Enter email"
                                      />
-                                     <BFormInvalidFeedback v-if="errors.email">{{ errors.email[0] }}</BFormInvalidFeedback>
+                                     <BFormInvalidFeedback v-if="errors && errors.email">{{ errors.email[0] }}</BFormInvalidFeedback>
 
                             </BFormGroup>
                             <BFormGroup class="my-2" id="input-group-2" label="Password:" label-for="input-2">
-                            <BFormInput id="input-2" v-model="user.password" :class="errors.password ? 'is-invalid' : ''" :disabled="!loading ? false : true"  placeholder="Enter Password" />
-                            <BFormInvalidFeedback v-if="errors.password">{{ errors.password[0] }}</BFormInvalidFeedback>
+                            <BFormInput type="password" id="input-2" v-model="user.password" :class="errors && errors.password ? 'is-invalid' : ''" :disabled="!loading ? false : true"  placeholder="Enter Password" />
+                            <BFormInvalidFeedback v-if="errors && errors.password">{{ errors.password[0] }}</BFormInvalidFeedback>
                             </BFormGroup>
 
                             <BButton  class="me-2"  type="submit" variant="primary">

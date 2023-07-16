@@ -33,6 +33,22 @@ const router = createRouter({
     },
     },
     {
+      path: '/users',
+      name: 'users',
+      component: () => import('../views/UsersView.vue'),
+      meta: {
+        requireAuth: true,
+    },
+    },
+    {
+      path: '/orders',
+      name: 'orders',
+      component: () => import('../views/OrdersView.vue'),
+      meta: {
+        requireAuth: true,
+    },
+    },
+    {
       path: '/:catchAll(.*)',
       name: 'notfound',
       component: () => import('../components/common/NotFound.vue'),

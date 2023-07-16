@@ -4,9 +4,9 @@
             <BCol>
                 
     
-            <BSpinner></BSpinner>
+            <BSpinner> Logouting....</BSpinner>
 
-            <BSkeletonIcon class="h3">Logouting....</BSkeletonIcon>
+         
         
           </BCol>
         </BRow>

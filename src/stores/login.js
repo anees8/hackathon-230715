@@ -5,10 +5,10 @@ import router from "../router/index";
 export const useLoginStore = defineStore("loginStore", {
   state: () => ({
       user: {
-          email: "",
-          password: "",
+          email: "admin@yopmail.com",
+          password: "admin@123",
       },       
-      loading: true,
+      loading: false,
       accessToken: localStorage.getItem("token"),
       errors: {},
     
@@ -25,7 +25,7 @@ export const useLoginStore = defineStore("loginStore", {
           try {
               const response = await axios.post("login", this.user);
               this.setToken(response.data.data.token);
-              console.log(response.data);
+              
               if (response.data.data.token) {
                   axios.defaults.headers.common["Authorization"] =
                       "Bearer " + response.data.data.token;
@@ -38,12 +38,14 @@ export const useLoginStore = defineStore("loginStore", {
           }
       },
       async logout() {
-          this.loading = true;
+         
           try {
-              const response = await axios.get("logout");
+              const response = await axios.post("logout");
+             
           } catch (error) {
               if (error.response) {
                   this.errors = error.response.data.errors;
+                
               }
           }
       },

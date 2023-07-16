@@ -9,8 +9,8 @@ import {BootstrapVueNext} from 'bootstrap-vue-next'
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue-next/dist/bootstrap-vue-next.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
-import { faUser} from '@fortawesome/free-regular-svg-icons';
+import {faArrowRight,faUsers,faGauge,faPen,faPlus} from "@fortawesome/free-solid-svg-icons";
+import { faUser,faTrashAlt} from '@fortawesome/free-regular-svg-icons';
 
 import {
     FontAwesomeIcon,
@@ -18,11 +18,14 @@ import {
     FontAwesomeLayersText,
 } from "@fortawesome/vue-fontawesome";
 
-library.add(faArrowRight,faUser);
+library.add(faArrowRight,faUser,faUsers,faGauge,faPen,faPlus,faTrashAlt);
 import App from './App.vue'
 
 import router from './router'
 import axios from "axios";
+
+import Swal from 'sweetalert2';
+window.Swal=Swal;
 
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
 

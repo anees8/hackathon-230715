@@ -11,28 +11,32 @@ setTimeout(() => {
 
 </script>
 <template>
- <header v-if="!['login', 'notfound', 'logout'].includes($route.name)">
-      <div v-if="isLoading">
+ <div v-if="isLoading">
         <BContainer fluid>
         <BRow class="align-items-center justify-content-center vh-100 text-center">
             <BCol>
             <BSpinner></BSpinner>
-
-            <BSkeletonIcon class="h3">Loading....</BSkeletonIcon>
-        
           </BCol>
         </BRow>
     </BContainer>
       </div>
       <div v-else>
-        <Sidebar/>
+        <div class="sidebar">
+      <Sidebar  v-if="!['login', 'notfound', 'logout'].includes($route.name)"/>
+<div class="content">
+      <RouterView />
+    </div>
       </div>
-    </header>
-
-  <RouterView />
-
+      </div>
 </template>
 
 <style scoped>
+.sidebar {
+  display: flex;
+}
 
+.sidebar .content {
+  flex: 1 1 0;
+  padding :1rem;
+}
 </style>
