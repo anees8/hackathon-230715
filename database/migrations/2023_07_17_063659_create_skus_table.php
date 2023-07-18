@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('skus', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->decimal('price', 8, 2);
             $table->foreignId('size_id')->constrained('sizes');
             $table->timestamps();

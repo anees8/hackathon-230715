@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained('orders');
             $table->timestamp('delivered_at')->nullable();
+            $table->decimal('amount', 8, 2);
             $table->timestamps();
         });
     }
