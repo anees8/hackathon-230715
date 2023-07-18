@@ -1,8 +1,8 @@
 <script setup>
 import {RouterLink} from 'vue-router';
-import { defineProps } from 'vue';
 
-const props = defineProps({
+
+defineProps({
   label: {
     type: String,
     required: true
@@ -39,8 +39,9 @@ const props = defineProps({
   
     
       cursor: pointer;
-      background-color: #F5F5F5;
-      color:#3F2305;
+      background-color: #DDE6ED;
+      color:#27374D;
+     
     }
     
 </style>
