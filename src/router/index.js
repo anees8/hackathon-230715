@@ -49,6 +49,14 @@ const router = createRouter({
     },
     },
     {
+      path: '/sizes',
+      name: 'sizes',
+      component: () => import('../views/SizesView.vue'),
+      meta: {
+        requireAuth: true,
+    },
+    },
+    {
       path: '/:catchAll(.*)',
       name: 'notfound',
       component: () => import('../components/common/NotFound.vue'),

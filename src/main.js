@@ -9,7 +9,7 @@ import {BootstrapVueNext} from 'bootstrap-vue-next'
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue-next/dist/bootstrap-vue-next.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import {faArrowRight,faUsers,faGauge,faPen,faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRight,faUsers,faGauge,faPen,faPlus,faBasketShopping,faS,faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
 import { faUser,faTrashAlt} from '@fortawesome/free-regular-svg-icons';
 
 import {
@@ -18,7 +18,7 @@ import {
     FontAwesomeLayersText,
 } from "@fortawesome/vue-fontawesome";
 
-library.add(faArrowRight,faUser,faUsers,faGauge,faPen,faPlus,faTrashAlt);
+library.add(faArrowRight,faUser,faUsers,faGauge,faPen,faPlus,faTrashAlt,faBasketShopping,faS,faRightFromBracket);
 import App from './App.vue'
 
 import router from './router'

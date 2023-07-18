@@ -1,4 +1,5 @@
 <template>
+   <b-container fluid>
     <b-row>
       <b-card>
         <b-col>
@@ -138,6 +139,7 @@
         </b-row>
       </b-card>
     </b-row>
+  </b-container>
   </template>
   <script setup>
   import { storeToRefs } from "pinia";

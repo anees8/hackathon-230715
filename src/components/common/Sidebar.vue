@@ -14,13 +14,18 @@ icon: "users",
 name: "users",
 },
 {
+label: "Sizes",
+icon: "s",
+name: "sizes",
+},
+{
 label: "Orders",
-icon: "arrow-right",
+icon: "basket-shopping",
 name: "orders",
 },
 {
 label: "Logout",
-icon: "arrow-right",
+icon: "right-from-bracket",
 name: "logout",
 },
 
