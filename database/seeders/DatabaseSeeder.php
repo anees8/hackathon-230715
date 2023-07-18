@@ -5,6 +5,13 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Database\Seeders\SKUSeeder;
+use Database\Seeders\SizeSeeder;
+use Database\Seeders\TailorSeeder;
+use Database\Seeders\OrderSeeder;
+use Database\Seeders\DeliverySeeder;
+
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -14,11 +21,23 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-
         \App\Models\User::create([
             'name' => 'admin',
             'email' => 'admin@yopmail.com',
             'password' => Hash::make('admin@123'), // password
         ]);
+
+        $this->call([
+            SizeSeeder::class,
+            SKUSeeder::class,
+            TailorSeeder::class,
+            OrderSeeder::class,
+
+            DeliverySeeder::class,
+            
+        ]);
+
     }
+
+
 }
