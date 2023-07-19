@@ -57,6 +57,16 @@ const router = createRouter({
     },
     },
     {
+      path: '/skus',
+      name: 'skus',
+      component: () => import('../views/SkusView.vue'),
+      meta: {
+        requireAuth: true,
+    },
+    },
+
+    
+    {
       path: '/:catchAll(.*)',
       name: 'notfound',
       component: () => import('../components/common/NotFound.vue'),

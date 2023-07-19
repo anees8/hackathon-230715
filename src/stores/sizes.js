@@ -9,6 +9,7 @@ export const useSizesStore = defineStore("sizesStore", {
     fields: [
       { key: "id", label: "ID" },
       { key: "name", label: "Name" },
+      { key: "created_at", label: "Created Date" },
       { key: "actions", label: "Action" }
     ],
     isBusy: false,
@@ -36,46 +37,45 @@ export const useSizesStore = defineStore("sizesStore", {
       this.modal = !this.modal;
     },
     async uploadData() {
-        const formData = new FormData();
-        let config = {
-          header: { "content-type": "multipart/form-data" }
-        };
-        this.isBusy = true;
-        let url = "sizes";
-        if (this.size.name) {
-          formData.append("name", this.size.name);
-        }
-  
-  
-        if (!this.size.id) {
-          try {
-            const response = await axios.post(url, formData, config);
-  
-            this.hideModel();
-          } catch (error) {
-            if (error.response) {
-              this.errors = error.response.data.errors;
-            }
-            this.isBusy = false;
+      const formData = new FormData();
+      let config = {
+        header: { "content-type": "multipart/form-data" }
+      };
+      this.isBusy = true;
+      let url = "sizes";
+      if (this.size.name) {
+        formData.append("name", this.size.name.toUpperCase());
+      }
+
+      if (!this.size.id) {
+        try {
+          const response = await axios.post(url, formData, config);
+
+          this.hideModel();
+        } catch (error) {
+          if (error.response) {
+            this.errors = error.response.data.errors;
           }
-        } else {
-          formData.append("_method", "put");
-          try {
-            const response = await axios.post(
-              url + "/" + this.size.id,
-              formData,
-              config
-            );
-  
-            this.hideModel();
-          } catch (error) {
-            if (error.response) {
-              this.errors = error.response.data.errors;
-            }
-            this.isBusy = false;
-          }
+          this.isBusy = false;
         }
-      },
+      } else {
+        formData.append("_method", "put");
+        try {
+          const response = await axios.post(
+            url + "/" + this.size.id,
+            formData,
+            config
+          );
+
+          this.hideModel();
+        } catch (error) {
+          if (error.response) {
+            this.errors = error.response.data.errors;
+          }
+          this.isBusy = false;
+        }
+      }
+    },
     deleteSize(id) {
       Swal.fire({
         title: "Are you sure?",

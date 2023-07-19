@@ -13,7 +13,7 @@ export const useUsersStore = defineStore("usersStore", {
     ],
     users: [],
     user: {},
-    perPage: 5,
+    perPage: 10,
     currentPage: 1,
     isBusy: false,
     rows: null,
@@ -119,7 +119,7 @@ export const useUsersStore = defineStore("usersStore", {
       }
 
       if (this.user.email) {
-        formData.append("email", this.user.email);
+        formData.append("email", this.user.email.toLowerCase());
       }
       if (this.user.password) {
         formData.append("password", this.user.password);

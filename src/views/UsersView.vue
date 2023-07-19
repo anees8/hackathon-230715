@@ -22,50 +22,80 @@
                 hide-header-close
                 no-close-on-backdrop
               >
+              <BFormGroup
+                    id="input-group-1"
+                    label="Your Name:"
+                    label-for="input-1"
+                  >
+                    <BFormInput
+                      id="input-1"
+                      v-model="user.name"
+                      :class="errors && errors.name ? 'is-invalid' : ''"
+                      :disabled="!isBusy ? false : true"
+                      type="text"
+                      placeholder="Enter Your Name"
+                    />
+                    <BFormInvalidFeedback v-if="errors && errors.name">{{
+                      errors.name[0]
+                    }}</BFormInvalidFeedback>
+                  </BFormGroup>
+                  <BFormGroup
+                    id="input-group-2"
+                    label="Your Email Address:"
+                    label-for="input-2"
+                  >
+                    <BFormInput
+                      id="input-2"
+                      v-model="user.email"
+                      :class="errors && errors.email ? 'is-invalid' : ''"
+                      :disabled="!isBusy ? false : true"
+                      type="email"
+                      placeholder="Enter Email Address"
+                    />
+                    <BFormInvalidFeedback v-if="errors && errors.email">{{
+                      errors.email[0]
+                    }}</BFormInvalidFeedback>
+                  </BFormGroup>
 
-           
-      <b-form-group
-        id="input-group-1"
-        label="Email address:"
-        label-for="input-1"
-        description="We'll never share your email with anyone else."
-      >
-        <b-form-input
-          id="input-1"
-          v-model="user.email"
-          type="email"
-          placeholder="Enter email"
-          required
-        ></b-form-input>
-      </b-form-group>
+                
+                  
+                  <BFormGroup
+                    id="input-group-3"
+                    label="Password :"
+                    label-for="input-3"
+                  >
+                    <BFormInput
+                      id="input-3"
+                      v-model="user.password"
+                      :class="errors && errors.password ? 'is-invalid' : ''"
+                      :disabled="!isBusy ? false : true"
+                      type="password"
+                      placeholder="Enter Password"
+                    />
+                    <BFormInvalidFeedback v-if="errors && errors.password">{{
+                      errors.password[0]
+                    }}</BFormInvalidFeedback>
+                  </BFormGroup>
 
-      <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="user.name"
-          placeholder="Enter name"
-          required
-        ></b-form-input>
-      </b-form-group>
+                  <BFormGroup
+                    id="input-group-4"
+                    label="Confirm Password :"
+                    label-for="input-4"
+                  >
+                    <BFormInput
+                      id="input-4"
+                      v-model="user.password_confirmation"
+                      :class="errors && errors.password_confirmation ? 'is-invalid' : ''"
+                      :disabled="!isBusy ? false : true"
+                      type="password"
+                      placeholder="Enter Confirm Password"
+                    />
+                    <BFormInvalidFeedback v-if="errors && errors.password_confirmation">{{
+                      errors.password_confirmation[0]
+                    }}</BFormInvalidFeedback>
+                  </BFormGroup>
+  
 
-      <b-form-group id="input-group-3" label="Password:" label-for="input-3">
-        <b-form-input
-          id="input-3"
-          type="password"
-          v-model="user.password"
-          placeholder="Enter  Password"
-          required
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group id="input-group-4" label="Confirm Password:" label-for="input-4">
-        <b-form-input
-          id="input-4"
-          type="password"
-          v-model="user.password_confirmation"
-          placeholder="Enter Confirm Password"
-          required
-        ></b-form-input>
-      </b-form-group>
 
       <template #footer>
                   <div>
@@ -154,6 +184,7 @@
     currentPage,
     modal, 
     rows,
+    errors,
     isBusy,
   } = storeToRefs(useUsersStore());
   

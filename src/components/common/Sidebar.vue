@@ -14,14 +14,19 @@ icon: "users",
 name: "users",
 },
 {
+label: "Orders",
+icon: "basket-shopping",
+name: "orders",
+},
+{
 label: "Sizes",
 icon: "s",
 name: "sizes",
 },
 {
-label: "Orders",
-icon: "basket-shopping",
-name: "orders",
+label: "Skus",
+icon: "barcode",
+name: "skus",
 },
 {
 label: "Logout",
