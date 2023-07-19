@@ -32,13 +32,22 @@ class SizeController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:sizes|in:XS,S,M,L,XL|uppercase',
+            'name' => [
+                'required',
+                'uppercase',
+                'unique:sizes,name',
+                'in:XS,S,M,L,XL',
+            ],
+           
         ]);
+
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors(), Response::HTTP_BAD_REQUEST);       
-        }
-        $data['size'] =   Size::create([
+        }        
+
+            $data['size'] =   Size::create([
             'name'=>$request->name
             ]);
         return $this->sendResponse($data, 'Size register successfully.',Response::HTTP_CREATED);
@@ -65,9 +74,18 @@ class SizeController extends Controller
      */
     public function update(Request $request, Size $size)
     {
+        
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:sizes|in:XS,S,M,L,XL|uppercase',
+            'name' => [
+                'required',
+                'uppercase',
+                'unique:sizes,name,'. $size->id,
+                'in:XS,S,M,L,XL',
+            ],
+           
         ]);
+
+       
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors(), Response::HTTP_BAD_REQUEST);       
         }
