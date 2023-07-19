@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();            
-            $table->foreignId('sku_id')->nullable()->default(null)->constrained('skus');
-            $table->foreignId('tailor_id')->nullable()->default(null)->constrained('tailors');
+            $table->foreignId('sku_id')->nullable()->default(null)->constrained('skus')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('tailor_id')->nullable()->default(null)->constrained('tailors')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('quantity');
             $table->decimal('cart_value', 8, 2);
             $table->timestamps();

@@ -14,11 +14,16 @@ class SKUSeeder extends Seeder
     {
         
         $skus = [
-            ['price' => 345.00, 'size_id' => 1],
-            ['price' => 395.00, 'size_id' => 2],
-            ['price' => 445.00, 'size_id' => 3],
-            ['price' => 495.00, 'size_id' => 4],
-            ['price' => 545.00, 'size_id' => 5],
+            ['name' => 'sku1','price' => 345.00, 'size_id' => 1],
+            ['name' => 'sku1','price' => 395.00, 'size_id' => 2],
+            ['name' => 'sku1','price' => 445.00, 'size_id' => 3],
+            ['name' => 'sku1','price' => 495.00, 'size_id' => 4],
+            ['name' => 'sku1','price' => 545.00, 'size_id' => 5],
+            ['name' => 'sku2','price' => 345.00, 'size_id' => 1],
+            ['name' => 'sku2','price' => 395.00, 'size_id' => 2],
+            ['name' => 'sku2','price' => 445.00, 'size_id' => 3],
+            ['name' => 'sku2','price' => 495.00, 'size_id' => 4],
+            ['name' => 'sku2','price' => 545.00, 'size_id' => 5],
             // Add more dummy SKUs as needed
         ];
 

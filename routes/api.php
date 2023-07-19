@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SizeController;
+use App\Http\Controllers\SkuController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,6 +28,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::resource('users', UsersController::class);
     Route::resource('sizes', SizeController::class);
+    Route::resource('skus', SkuController::class);
 });
 
 

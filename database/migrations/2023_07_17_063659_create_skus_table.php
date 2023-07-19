@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('price', 8, 2);
-            $table->foreignId('size_id')->constrained('sizes');
+            $table->foreignId('size_id')->constrained('sizes')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

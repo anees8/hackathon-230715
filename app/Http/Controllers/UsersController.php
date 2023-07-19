@@ -45,12 +45,22 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'password_confirmation' => 'required|same:password',
+            'name' => [
+                'required'
+            ],
+            'email' => [
+                'required','email','unique:users,email'
+            ],
+            'password' => [
+                'required'
+            ],
+            'password_confirmation' => [
+                'required','same:password'
+            ],
         ]);
+    
    
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors(), Response::HTTP_BAD_REQUEST);       
@@ -97,11 +107,19 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
+
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            
+            'name' => [
+                'required'
+            ],
+            'email' => [
+                'required','email','lowercase','unique:users,email,'. $user->id
+            ],
+            'password_confirmation' => [
+                'same:password'
+            ],
         ]);
+
    
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors(), Response::HTTP_BAD_REQUEST);       

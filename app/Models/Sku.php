@@ -9,8 +9,9 @@ class Sku extends Model
 {
     use HasFactory;
 
-public function sizes(){
-    return $this->hasMany(Size::class);
-}
+    public function size()
+    {
+        return $this->hasOne(Size::class, 'id', 'size_id');
+    }
 
 }

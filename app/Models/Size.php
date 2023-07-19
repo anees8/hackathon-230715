@@ -9,8 +9,12 @@ class Size extends Model
 {
     use HasFactory;
 
-    public function sku()
-{
+    protected $fillable = [
+        'name',
+    ];
+
+    public function sku(){
     return $this->belongsTo(Sku::class);
 }
+
 }
