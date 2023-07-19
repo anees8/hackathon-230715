@@ -43,8 +43,18 @@ class SkuController extends Controller
                 'min:4',
                 new MinumFiveUniqueNameRule
             ],
-            'price' => 'required|numeric|min:345|max:995',
-            'size_id' => 'required|numeric|in:1,2,3,4,5',
+            'price' => [
+                'required',
+                'numeric',
+                'min:345',
+                'max:995',
+            ],
+            'size_id' => [
+                'required',
+                'numeric',
+                'in:1,2,3,4,5',
+                new UniqueSizeForSkuRule($request->name)
+            ],    
         ]);
       
         if($validator->fails()){
@@ -81,6 +91,7 @@ class SkuController extends Controller
      */
     public function update(Request $request, Sku $sku)
     {
+
         $validator = Validator::make($request->all(), [
             'name' => [
                 'required',
@@ -89,8 +100,18 @@ class SkuController extends Controller
                 'min:4',
                 new MinumFiveUniqueNameRule($sku->id)
             ],
-            'price' => 'required|numeric|min:345|max:995',
-            'size_id' => 'required|numeric|in:1,2,3,4,5',
+            'price' => [
+                'required',
+                'numeric',
+                'min:345',
+                'max:995',
+            ],
+            'size_id' => [
+                'required',
+                'numeric',
+                'in:1,2,3,4,5',
+                new UniqueSizeForSkuRule($sku->name,$sku->id)
+            ],    
         ]);
       
         if($validator->fails()){
