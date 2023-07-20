@@ -1,10 +1,10 @@
 <script setup>
 import { storeToRefs } from "pinia";
 
-import { useOrdersStore } from "../stores/orders.js";
+import { useProductTypesStore } from "../stores/productTypes";
 const {
-  orders,
-  order,
+  productTypes,
+  productType,
   fields,
   modal,
   isBusy,
@@ -13,19 +13,19 @@ const {
   perPage,
   currentPage,
   rows
-} = storeToRefs(useOrdersStore());
+} = storeToRefs(useProductTypesStore());
 
 const {
-  getOrders,
+  getProductTypes,
   dateTime,
   setPerPage,
   uploadData,
-  editOrder,
-  deleteOrder,
+  editProductType,
+  deleteProductType,
   hideModel
-} = useOrdersStore();
+} = useProductTypesStore();
 
-getOrders();
+getProductTypes();
 </script>
 <template>
   <b-container fluid>
@@ -33,7 +33,7 @@ getOrders();
       <b-card>
         <b-col>
           <b-row align-v="center">
-            <b-col><h5>Orders List</h5></b-col>
+            <b-col><h5>Product Type List</h5></b-col>
             <b-col>
               <b-button
                 @click="modal = !modal"
@@ -41,32 +41,33 @@ getOrders();
                 pill
                 variant="outline-dark"
               >
-                <FontAwesomeIcon icon="plus" class="me-2" />Add Order</b-button
+                <FontAwesomeIcon icon="plus" class="me-2" />Add Product
+                Type</b-button
               >
               <div>
                 <b-modal
                   v-model="modal"
                   :title="
-                    order.id ? 'Update Order' : 'Add Order'
+                    productType.id ? 'Update Product Type' : 'Add Product Type'
                   "
                   hide-header-close
                   no-close-on-backdrop
                 >
                   <BFormGroup
                     id="input-group-1"
-                    label="Order Qty:"
+                    label="Product Type Name:"
                     label-for="input-1"
                   >
                     <BFormInput
                       id="input-1"
-                      v-model="order.quatity"
-                      :class="errors && errors.quatity ? 'is-invalid' : ''"
+                      v-model="productType.name"
+                      :class="errors && errors.name ? 'is-invalid' : ''"
                       :disabled="!isBusy ? false : true"
                       type="text"
-                      placeholder="Enter Order Qty"
+                      placeholder="Enter Product Type Name"
                     />
-                    <BFormInvalidFeedback v-if="errors && errors.quantity">{{
-                      errors.quantity[0]
+                    <BFormInvalidFeedback v-if="errors && errors.name">{{
+                      errors.name[0]
                     }}</BFormInvalidFeedback>
                   </BFormGroup>
 
@@ -82,9 +83,9 @@ getOrders();
                         @click="uploadData"
                       >
                         {{
-                          order.id
-                            ? "Update Order"
-                            : "Add Order"
+                          productType.id
+                            ? "Update Product Type"
+                            : "Add Product Type"
                         }}
                       </button>
                     </div>
@@ -102,31 +103,19 @@ getOrders();
             caption-top
             hover
             footClone
-            :items="orders"
+            :items="productTypes"
             :fields="fields"
             :busy="isBusy"
             responsive
             show-empty
           >
-            <template #cell(product_id)="data">{{
-            data.item.sku.id
-            }}</template>
-            
-            
-         
-            <template #cell(price)="data">{{
-              data.item.sku.price
-            }}</template>
-            <template #cell(cart_value)="data">{{
-                data.item.sku.price*data.item.quantity
-            }}</template>
             <template #cell(created_at)="data">{{
-              dateTime(data.item.created_at)
+              dateTime(data.value)
             }}</template>
             <template #cell(actions)="data">
               <b-button
                 class="rounded-circle p-2 me-2"
-                @click="editOrder(data.item.id)"
+                @click="editProductType(data.item.id)"
                 variant="outline-success"
               >
                 <FontAwesomeIcon icon="pen" />
@@ -134,7 +123,7 @@ getOrders();
 
               <b-button
                 class="rounded-circle p-2 me-2"
-                @click="deleteOrder(data.item.id)"
+                @click="deleteProductType(data.item.id)"
                 variant="outline-danger"
               >
                 <FontAwesomeIcon icon="fa-regular fa-trash-alt" />
@@ -155,7 +144,7 @@ getOrders();
           <b-col xl="5" lg="6" md="8" class="p-2">
             <b-pagination
               v-if="rows / perPage > 1"
-              v-on:click="getOrders"
+              v-on:click="getProductTypes"
               v-model="currentPage"
               :total-rows="rows"
               :per-page="perPage"
