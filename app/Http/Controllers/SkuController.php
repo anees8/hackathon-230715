@@ -17,12 +17,13 @@ class SkuController extends Controller
      */
     public function index(Request $request)
     {
-        $data['skus']= Sku::with('size')->Paginate($request->perPage);
+        $data['skus']= Sku::with('size','product_type')->Paginate($request->perPage);
         return $this->sendResponse($data, 'Skus return successfully.',Response::HTTP_OK);
     }
 
     /**
      * Show the form for creating a new resource.
+     * 
      */
     public function create()
     {
@@ -37,6 +38,9 @@ class SkuController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => [
+                'required','min:5','max:255'
+            ],
+            'sku_code' => [
                 'required',
                 'uppercase',
                 'alpha_num:ascii',
@@ -53,8 +57,14 @@ class SkuController extends Controller
                 'required',
                 'numeric',
                 'in:1,2,3,4,5',
-                new UniqueSizeForSkuRule($request->name)
-            ],    
+                new UniqueSizeForSkuRule($request->sku_code)
+            ], 
+            
+            'product_type_id' => [
+                'required',
+                 'numeric',
+            ], 
+            
         ]);
       
         if($validator->fails()){
@@ -63,8 +73,10 @@ class SkuController extends Controller
 
             $data['skus'] =   Sku::create([
             'name'=>$request->name,
+            'sku_code'=>$request->sku_code,
             'price'=>$request->price,
-            'size_id'=>$request->size_id
+            'size_id'=>$request->size_id,
+            'product_type_id'=>$request->product_type_id,
             ]);
             
         return $this->sendResponse($data, 'Sku register successfully.',Response::HTTP_CREATED);
@@ -94,11 +106,14 @@ class SkuController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => [
+                'required','min:5','max:255'
+            ],
+            'sku_code' => [
                 'required',
                 'uppercase',
                 'alpha_num:ascii',
                 'min:4',
-                new MinumFiveUniqueNameRule($sku->id)
+                new MinumFiveUniqueNameRule
             ],
             'price' => [
                 'required',
@@ -110,16 +125,22 @@ class SkuController extends Controller
                 'required',
                 'numeric',
                 'in:1,2,3,4,5',
-                new UniqueSizeForSkuRule($sku->name,$sku->id)
-            ],    
+                new UniqueSizeForSkuRule($sku->sku_code,$sku->id)
+            ],
+            'product_type_id' => [
+                'required',
+                 'numeric',
+            ],     
         ]);
       
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors(), Response::HTTP_BAD_REQUEST);       
         }
-        $sku->name =  $request->name;  
+        $sku->name =  $request->name; 
+        $sku->sku_code =  $request->sku_code;  
         $sku->price =  $request->price;  
         $sku->size_id =  $request->size_id;  
+        $sku->product_type_id =  $request->product_type_id; 
         $sku->update();
         return $this->sendResponse('Sku Updated Successfully.',Response::HTTP_OK);
     }

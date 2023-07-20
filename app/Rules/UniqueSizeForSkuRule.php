@@ -10,12 +10,12 @@ class UniqueSizeForSkuRule implements ValidationRule
 {
 
     protected $id;
-    protected $name;
+    protected $sku_code;
 
-    public function __construct($name=null,$id=null)
+    public function __construct($sku_code=null,$id=null)
     {
         $this->id = $id;
-        $this->name = $name;
+        $this->sku_code = $sku_code;
     }
     /**
      * Run the validation rule.
@@ -25,10 +25,11 @@ class UniqueSizeForSkuRule implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
 
-        $fail("The $attribute must contain at least five unique sizes (XS, S, M, L, XL)");
-        
-        
-        // . Missing sizes: $missingSizesString.");
+            $skuQuery = Sku::where('sku_code',$this->sku_code)->where('size_id', $value)->count();
+            $skuQuerywithId = Sku::where('id',$this->id)->where('size_id', $value)->where('sku_code',$this->sku_code)->count();
+            if($skuQuerywithId == 0 && $skuQuery==1){
+            $fail("The $attribute must contain at  unique sizes");
+            }
         
     }
 }

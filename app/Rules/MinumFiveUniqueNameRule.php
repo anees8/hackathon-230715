@@ -23,8 +23,8 @@ class MinumFiveUniqueNameRule implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {   
        
-        $skuQuery = Sku::where('name', $value)->count();
-        $skuQuerywithId = Sku::where('name', $value)->where('id',$this->id)->count();
+        $skuQuery = Sku::where('sku_code', $value)->count();
+        $skuQuerywithId = Sku::where('sku_code', $value)->where('id',$this->id)->count();
         if ($skuQuerywithId == 0 && $skuQuery >=5) {
         $fail("The $attribute must contain at least five unique names.");
         }
