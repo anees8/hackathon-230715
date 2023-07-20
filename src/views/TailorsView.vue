@@ -4,7 +4,7 @@
       <b-card>
         <b-col>
           <b-row align-v="center">
-            <b-col><h5>SKUS List</h5></b-col>
+            <b-col><h5>Tailors List</h5></b-col>
             <b-col>
               <b-button
                 @click="modal = !modal"
@@ -12,27 +12,27 @@
                 pill
                 variant="outline-dark"
               >
-                <FontAwesomeIcon icon="plus" class="me-2" />Add SKU</b-button
+                <FontAwesomeIcon icon="plus" class="me-2" />Add Tailor</b-button
               >
               <div>
                 <b-modal
                   v-model="modal"
-                  :title="sku.id ? 'Update SKU' : 'Add SKU'"
+                  :title="tailor.id ? 'Update Tailor' : 'Add Tailor'"
                   hide-header-close
                   no-close-on-backdrop
                 >
                   <BFormGroup
                     id="input-group-1"
-                    label="Product Name:"
+                    label="Tailor Name:"
                     label-for="input-1"
                   >
                     <BFormInput
                       id="input-1"
-                      v-model="sku.name"
+                      v-model="tailor.name"
                       :class="errors && errors.name ? 'is-invalid' : ''"
                       :disabled="!isBusy ? false : true"
                       type="text"
-                      placeholder="Enter Product Name"
+                      placeholder="Enter Tailor Name"
                     />
                     <BFormInvalidFeedback v-if="errors && errors.name">{{
                       errors.name[0]
@@ -40,88 +40,98 @@
                   </BFormGroup>
 
                   <BFormGroup
-                    id="input-group-1"
-                    label="Sku Code:"
-                    label-for="input-1"
-                  >
-                    <BFormInput
-                      id="input-1"
-                      v-model="sku.sku_code"
-                      :class="errors && errors.sku_code ? 'is-invalid' : ''"
-                      :disabled="!isBusy ? false : true"
-                      type="text"
-                      placeholder="Enter SKU Code"
-                    />
-                    <BFormInvalidFeedback v-if="errors && errors.sku_code">{{
-                      errors.sku_code[0]
-                    }}</BFormInvalidFeedback>
-                  </BFormGroup>
-
-                  <BFormGroup
                     id="input-group-2"
-                    label="Price:"
+                    label="Tailor Phone Number:"
                     label-for="input-2"
                   >
                     <BFormInput
                       id="input-2"
-                      v-model="sku.price"
-                      :class="errors && errors.price ? 'is-invalid' : ''"
+                      v-model="tailor.phone"
+                      :class="errors && errors.phone ? 'is-invalid' : ''"
                       :disabled="!isBusy ? false : true"
                       type="number"
-                      placeholder="Enter Price"
+                      placeholder="Enter Tailor Phone Number"
                     />
-                    <BFormInvalidFeedback v-if="errors && errors.price">{{
-                      errors.price[0]
+                    <BFormInvalidFeedback v-if="errors && errors.phone">{{
+                      errors.phone[0]
                     }}</BFormInvalidFeedback>
                   </BFormGroup>
 
                   <BFormGroup
                     id="input-group-3"
-                    label="Size:"
+                    label="Tailor Email Address :"
                     label-for="input-3"
                   >
-                    <BFormSelect
-                      v-model="sku.size_id"
-                      :class="errors && errors.size_id ? 'is-invalid' : ''"
+                    <BFormInput
+                      id="input-3"
+                      v-model="tailor.email"
+                      :class="errors && errors.email ? 'is-invalid' : ''"
                       :disabled="!isBusy ? false : true"
-                    >
-                      <BFormSelectOption disabled   value="">Please select an option</BFormSelectOption>
-
-                      <BFormSelectOption
-                        v-for="(size, index) in sizes"
-                        :key="index"
-                        :value="size.id"
-                        >{{ size.name }}</BFormSelectOption
-                      >
-                    </BFormSelect>
-                    <BFormInvalidFeedback v-if="errors && errors.size_id">{{
-                      errors.size_id[0]
+                      type="email"
+                      placeholder="Enter Tailor Email Address"
+                    />
+                    <BFormInvalidFeedback v-if="errors && errors.email">{{
+                      errors.email[0]
                     }}</BFormInvalidFeedback>
                   </BFormGroup>
                   <BFormGroup
-                    id="input-group-3"
-                    label="Category:"
-                    label-for="input-3"
+                    id="input-group-4"
+                    label="Commission Limit / Day :"
+                    label-for="input-4"
                   >
-                    <BFormSelect
-                      v-model="sku.product_type_id"
-                      :class="errors && errors.product_type_id ? 'is-invalid' : ''"
+                    <BFormInput
+                      id="input-4"
+                      v-model="tailor.commission_limit"
+                      :class="
+                        errors && errors.commission_limit ? 'is-invalid' : ''
+                      "
                       :disabled="!isBusy ? false : true"
+                      type="number"
+                      placeholder="Enter Commission Limit / Day"
+                    />
+                    <BFormInvalidFeedback
+                      v-if="errors && errors.commission_limit"
+                      >{{ errors.commission_limit[0] }}</BFormInvalidFeedback
                     >
-                      <BFormSelectOption disabled   value="">Please select an option</BFormSelectOption>
-
-                      <BFormSelectOption
-                        v-for="(productType, index) in productTypes"
-                        :key="index"
-                        :value="productType.id"
-                        >{{ productType.name }}</BFormSelectOption
-                      >
-                    </BFormSelect>
-                    <BFormInvalidFeedback v-if="errors && errors.product_type_id">{{
-                      errors.product_type_id[0]
-                    }}</BFormInvalidFeedback>
                   </BFormGroup>
 
+                  <BFormGroup
+                    id="input-group-5"
+                    label="Maximum Unit / Day :"
+                    label-for="input-5"
+                  >
+                    <BFormInput
+                      id="input-5"
+                      v-model="tailor.max_units_per_day"
+                      :class="
+                        errors && errors.max_units_per_day ? 'is-invalid' : ''
+                      "
+                      :disabled="!isBusy ? false : true"
+                      type="number"
+                      placeholder="Enter Maximum Unit / Day"
+                    />
+                    <BFormInvalidFeedback
+                      v-if="errors && errors.max_units_per_day"
+                      >{{ errors.max_units_per_day[0] }}</BFormInvalidFeedback
+                    >
+                  </BFormGroup>
+
+                  <BFormGroup
+                    id="input-group-6"
+                    label="Address :"
+                    label-for="input-6"
+                  >
+                    <BFormTextarea
+                      id="textarea-1"
+                      v-model="tailor.address"
+                      :class="errors && errors.address ? 'is-invalid' : ''"
+                      :disabled="!isBusy ? false : true"
+                      placeholder="Enter Address"
+                    />
+                    <BFormInvalidFeedback v-if="errors && errors.address">{{
+                      errors.address[0]
+                    }}</BFormInvalidFeedback>
+                  </BFormGroup>
                   <template #footer>
                     <div>
                       <button class="btn btn-outline-dark" @click="hideModel">
@@ -133,7 +143,7 @@
                         class="btn btn-outline-primary"
                         @click="uploadData"
                       >
-                        {{ sku.id ? "Update SKU" : "Add SKU" }}
+                        {{ tailor.id ? "Update Tailor" : "Add Tailor" }}
                       </button>
                     </div>
                   </template>
@@ -150,21 +160,27 @@
             caption-top
             hover
             footClone
-            :items="skus"
+            :items="tailors"
             :fields="fields"
             :busy="isBusy"
             responsive
             show-empty
           >
-            <template #cell(size)="data">{{ data.item.size.name }}</template>
-            <template #cell(product_type)="data">{{ data.item.product_type.name.toUpperCase() }}</template>
-            <template #cell(created_at)="data">{{
-              dateTime(data.item.created_at)
-            }}</template>
+            <template #cell(product_types)="data">
+              <ul>
+                <li
+                  v-for="(product_type, index) in data.item.product_types"
+                  :key="index"
+                >
+                  {{ product_type.name }}
+                </li>
+              </ul>
+            </template>
             <template #cell(actions)="data">
+             
               <b-button
                 class="rounded-circle p-2 me-2"
-                @click="editSku(data.item.id)"
+                @click="editTailor(data.item.id)"
                 variant="outline-success"
               >
                 <FontAwesomeIcon icon="pen" />
@@ -172,7 +188,7 @@
 
               <b-button
                 class="rounded-circle p-2 me-2"
-                @click="deleteSku(data.item.id)"
+                @click="deleteTailor(data.item.id)"
                 variant="outline-danger"
               >
                 <FontAwesomeIcon icon="fa-regular fa-trash-alt" />
@@ -206,12 +222,11 @@
 </template>
 <script setup>
 import { storeToRefs } from "pinia";
-import { useSkusStore } from "../stores/skus.js";
-import { useSizesStore } from "../stores/sizes.js";
-import { useProductTypesStore } from "../stores/productTypes";
+
+import { useTailorsStore } from "../stores/tailors.js";
 const {
-  skus,
-  sku,
+  tailors,
+  tailor,
   fields,
   modal,
   isBusy,
@@ -220,28 +235,16 @@ const {
   perPage,
   currentPage,
   rows
-} = storeToRefs(useSkusStore());
-const { sizes } = storeToRefs(useSizesStore());
-
-const { getSizes } = useSizesStore();
-const { productTypes } = storeToRefs(useProductTypesStore());
-
-const { getProductTypes } = useProductTypesStore();
-
-
+} = storeToRefs(useTailorsStore());
 
 const {
-  getSkus,
+  getTailors,
   setPerPage,
-  dateTime,
   uploadData,
-  editSku,
-  deleteSku,
+  editTailor,
+  deleteTailor,
   hideModel
-} = useSkusStore();
+} = useTailorsStore();
 
-getSkus();
-
-getSizes();
-getProductTypes();
+getTailors();
 </script>

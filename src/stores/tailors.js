@@ -2,18 +2,20 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import moment from "moment";
 
-export const useSkusStore = defineStore("skusStore", {
+export const useTailorsStore = defineStore("tailorsStore", {
   state: () => ({
-    skus: [],
-    sku: {},
+    tailors: [],
+    tailor: {},
     fields: [
       { key: "id", label: "ID" },
       { key: "name", label: "Name" },
-      { key: "sku_code", label: "SKU Code" },
-      { key: "price", label: "Price" },
-      { key: "size", label: "Size" },
-      { key: "product_type", label: "Category" },
-      { key: "created_at", label: "Created Date" },
+      { key: "phone", label: "Phone" },
+      { key: "product_types", label: "Experience IN" },
+      { key: "daily_commission", label: "Today Comission" },
+      { key: "total_commission", label: "Total Commission" },
+      { key: "address", label: "Address" },
+      { key: "max_units_per_day", label: "Max Order Per Day" },
+      { key: "commission_limit", label: "Daily Coummission Limit" },
       { key: "actions", label: "Action" }
     ],
     isBusy: false,
@@ -31,10 +33,10 @@ export const useSkusStore = defineStore("skusStore", {
   }),
 
   actions: {
-    async getSkus() {
+    async getTailors() {
         this.isBusy = true;
         try {
-          let url = "skus";
+          let url = "tailors";
           if (this.perPage) {
             url += `?perPage=${this.perPage}`;
           }
@@ -42,9 +44,9 @@ export const useSkusStore = defineStore("skusStore", {
             url += `${this.perPage ? "&" : "?"}page=${this.currentPage}`;
           }
           const response = await axios.get(url);
-          this.skus = response.data.data.skus.data;
-          this.currentPage = response.data.data.skus.current_page;
-          this.rows = response.data.data.skus.total;
+          this.tailors = response.data.data.tailors.data;
+          this.currentPage = response.data.data.tailors.current_page;
+          this.rows = response.data.data.tailors.total;
   
           this.isBusy = false;
         } catch (error) {
@@ -54,8 +56,8 @@ export const useSkusStore = defineStore("skusStore", {
           this.isBusy = false;
         }
       },
-    editSku(id) {
-      this.sku = this.skus.find((sku) => sku.id == id);
+      editTailor(id) {
+      this.tailor = this.tailors.find((tailor) => tailor.id == id);
       this.modal = !this.modal;
     },
     async uploadData() {
@@ -64,24 +66,28 @@ export const useSkusStore = defineStore("skusStore", {
           header: { "content-type": "multipart/form-data" }
         };
         this.isBusy = true;
-        let url = "skus";
-        if (this.sku.name) {
-          formData.append("name", this.sku.name);
+        let url = "tailors";
+        if (this.tailor.name) {
+          formData.append("name", this.tailor.name);
         }
-        if (this.sku.sku_code) {
-          formData.append("sku_code", this.sku.sku_code.toUpperCase());
+        if (this.tailor.phone) {
+          formData.append("phone", this.tailor.phone);
         }
-        if (this.sku.price) {
-          formData.append("price", this.sku.price);
+        if (this.tailor.email) {
+          formData.append("email", this.tailor.email);
         }
-        if (this.sku.size_id) {
-          formData.append("size_id", this.sku.size_id);
+        if (this.tailor.address) {
+          formData.append("address", this.tailor.address);
         }
-        if (this.sku.product_type_id) {
-          formData.append("product_type_id", this.sku.product_type_id);
+        if (this.tailor.max_units_per_day) {
+          formData.append("max_units_per_day", this.tailor.max_units_per_day);
         }
-  
-        if (!this.sku.id) {
+        if (this.tailor.commission_limit) {
+          formData.append("commission_limit", this.tailor.commission_limit);
+        }
+
+      
+        if (!this.tailor.id) {
           try {
             const response = await axios.post(url, formData, config);
   
@@ -96,7 +102,7 @@ export const useSkusStore = defineStore("skusStore", {
           formData.append("_method", "put");
           try {
             const response = await axios.post(
-              url + "/" + this.sku.id,
+              url + "/" + this.tailor.id,
               formData,
               config
             );
@@ -110,10 +116,10 @@ export const useSkusStore = defineStore("skusStore", {
           }
         }
       },
-    deleteSku(id) {
+    deleteTailor(id) {
       Swal.fire({
         title: "Are you sure?",
-        text: "Do you want to Delete this SKU : " + id,
+        text: "Do you want to Delete this Tailor : " + id,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -122,13 +128,13 @@ export const useSkusStore = defineStore("skusStore", {
         cancelButtonText: "No, cancel"
       }).then((result) => {
         if (result.isConfirmed) {
-          let url = "skus/";
+          let url = "tailors/";
 
           axios
             .delete(url + id)
             .then((res) => {
-              this.getSkus();
-              Swal.fire("Deleted!", "Sku has been deleted.", "success");
+              this.getTailors();
+              Swal.fire("Deleted!", "Tailor has been deleted.", "success");
             })
             .catch((error) => {
               this.errors = error.response.data.errors;
@@ -142,16 +148,16 @@ export const useSkusStore = defineStore("skusStore", {
     setPerPage(value) {
         this.perPage = value;
         this.currentPage = 1;
-        this.getSkus();
+        this.getTailors();
       },
     resetForm() {
       this.errors = {};
-      this.sku = {};
+      this.tailor = {};
       this.isBusy = false;
     },
     hideModel() {
       this.modal = !this.modal;
-      this.getSkus();
+      this.getTailors();
       this.resetForm();
     }
   }
