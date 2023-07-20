@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Validator;
 
 class OrdersController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $data['orders']= Order::with(['sku','tailor'])->Paginate($request->perPage);
+        return $this->sendResponse($data, 'Orders return successfully.',Response::HTTP_OK);
     }
 
     /**

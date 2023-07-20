@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('sku_id')->nullable()->default(null)->constrained('skus')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('tailor_id')->nullable()->default(null)->constrained('tailors')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('quantity');
-            $table->decimal('cart_value', 8, 2);
+            $table->decimal('total', 8, 2);
             $table->timestamps();
         });
     }

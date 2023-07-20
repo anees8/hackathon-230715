@@ -19,17 +19,21 @@ class OrderSeeder extends Seeder
         $faker = Faker::create();
 
         $orderCount = 1000; // Number of orders to generate per day
-        $cartValue = 750; // Average cart value
+
+        $skus = Sku::all();
 
         for ($i = 0; $i < $orderCount; $i++) {
 
-            
+            $sku = $skus->random();
             $order = new Order();
-            $skuCount = rand(1, 5); 
-            $order->cart_value = $cartValue;
-            $order->sku_id = $skuCount;
-            $qty = rand(1, 10); 
-            $order->quantity =$qty ;
+    
+            $quantity = rand(1, 10); 
+            $totalPrice = $sku->price * $quantity;
+            
+            $order->sku_id =  $sku->id;
+          
+            $order->quantity =$quantity ;
+            $order->total = $totalPrice;
             $order->save();
             
             usleep(1000); // Wait for 1 millisecond between orders (adjust as needed)
