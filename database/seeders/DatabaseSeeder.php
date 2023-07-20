@@ -10,6 +10,7 @@ use Database\Seeders\SizeSeeder;
 use Database\Seeders\TailorSeeder;
 use Database\Seeders\OrderSeeder;
 use Database\Seeders\DeliverySeeder;
+use Database\Seeders\ProductTypeSeeder;
 
 
 class DatabaseSeeder extends Seeder
@@ -28,7 +29,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
+
             SizeSeeder::class,
+            ProductTypeSeeder::class,
             SKUSeeder::class,
             TailorSeeder::class,
             OrderSeeder::class,

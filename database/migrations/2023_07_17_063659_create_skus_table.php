@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('skus', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->decimal('price', 8, 2);
+            $table->string('name'); // Product name
+            $table->text('description')->nullable(); // Product description
+            $table->string('image')->nullable(); // Path to the product image
+            $table->string('sku_code'); // SKU code for reference
+            $table->decimal('price', 8, 2);     // SKU price in INR 
             $table->foreignId('size_id')->constrained('sizes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('product_type_id')->constrained('product_types')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

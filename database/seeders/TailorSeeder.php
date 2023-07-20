@@ -13,17 +13,26 @@ class TailorSeeder extends Seeder
      */
     public function run(): void
     {
+
+
+
+
+
         $tailors = [
             [
                 'name' => 'John Doe',
+                'phone' => '9876543210',
+                'address' => '32/23 T Street F District , India',
                 'commission_limit' => 1111.00,
-                'daily_commission' => 0.00,
+                'total_commission' => 0.00,
                 'created_at' => now(),
             ],
             [
                 'name' => 'Jane Smith',
+                'phone' => '9876543211',
+                'address' => '32/40 Z Street G District , India',
                 'commission_limit' => 1111.00,
-                'daily_commission' => 0.00,
+                'total_commission' => 0.00,
                 'created_at' => now(),
             ],
             // Add more dummy tailors as needed

@@ -6,6 +6,12 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SkuController;
+use App\Http\Controllers\ProductTypeController;
+use App\Http\Controllers\TailorController;
+use App\Http\Controllers\OrdersController;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +35,11 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('users', UsersController::class);
     Route::resource('sizes', SizeController::class);
     Route::resource('skus', SkuController::class);
+    Route::resource('product_types', ProductTypeController::class);
+    Route::resource('tailors', TailorController::class);
+    Route::resource('orders', OrdersController::class);
+    
+    
 });
 
 

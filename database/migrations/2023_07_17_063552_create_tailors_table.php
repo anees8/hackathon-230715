@@ -14,8 +14,13 @@ return new class extends Migration
         Schema::create('tailors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->decimal('commission_limit', 8, 2);
-            $table->decimal('daily_commission', 8, 2);
+            $table->string('phone')->unique();
+            $table->text('address');
+            $table->string('email')->nullable()->unique();
+            $table->decimal('commission_limit', 8, 2)->default(1111);
+            $table->decimal('total_commission', 8, 2)->default(0);
+            $table->integer('max_units_per_day')->default(10);
+            $table->decimal('daily_commission', 8, 2)->default(0);
             $table->timestamps();
         });
     }
