@@ -14,6 +14,11 @@ icon: "users",
 name: "users",
 },
 {
+label: "Tailors",
+icon: "t",
+name: "tailors",
+},
+{
 label: "Orders",
 icon: "basket-shopping",
 name: "orders",
@@ -23,6 +28,12 @@ label: "Sizes",
 icon: "s",
 name: "sizes",
 },
+{
+label: "Product Types",
+icon: "p",
+name: "product_types",
+},
+
 {
 label: "Skus",
 icon: "barcode",
