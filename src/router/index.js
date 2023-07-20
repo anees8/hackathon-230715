@@ -41,6 +41,14 @@ const router = createRouter({
     },
     },
     {
+      path: '/tailors',
+      name: 'tailors',
+      component: () => import('../views/TailorsView.vue'),
+      meta: {
+        requireAuth: true,
+    },
+    },
+    {
       path: '/orders',
       name: 'orders',
       component: () => import('../views/OrdersView.vue'),
@@ -56,6 +64,15 @@ const router = createRouter({
         requireAuth: true,
     },
     },
+    {
+      path: '/product_types',
+      name: 'product_types',
+      component: () => import('../views/ProductTypesView.vue'),
+      meta: {
+        requireAuth: true,
+    },
+    },
+    
     {
       path: '/skus',
       name: 'skus',
