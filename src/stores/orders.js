@@ -7,15 +7,68 @@ export const useOrdersStore = defineStore("ordersStore", {
     orders: [],
     order: {},
     fields: [
-      { key: "id", label: "ID" },
-      { key: "product_id", label: "Product ID" },
-      { key: "price", label: "Product Price" },
-      { key: "tailor", label: "Tailor Detail" },
-      { key: "quantity", label: "Quantity" },
-      { key: "cart_value", label: "Todal Order Value" },
-      { key: "created_at", label: "Created Date" },
-      { key: "actions", label: "Action" }
+      {
+        key: "id",
+        label: "ID",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "product_id",
+        label: "Product ID",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "product_size",
+        label: "Product Size",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "product_type",
+        label: "Product Type",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "price",
+        label: "Product Price",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "tailor",
+        label: "Tailor Detail",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "quantity",
+        label: "Quantity",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "cart_value",
+        label: "Todal Order Value",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "created_at",
+        label: "Created Date",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "actions",
+        label: "Action",
+        thClass: "text-center",
+        tdClass: "text-center"
+      }
     ],
+
     isBusy: false,
     modal: false,
     errors: {},
@@ -27,79 +80,77 @@ export const useOrdersStore = defineStore("ordersStore", {
       { value: 10, text: "10" },
       { value: 50, text: "50" },
       { value: 100, text: "100" }
-    ],
+    ]
   }),
 
   actions: {
     async getOrders() {
-        this.isBusy = true;
+      this.isBusy = true;
+      try {
+        let url = "orders";
+        if (this.perPage) {
+          url += `?perPage=${this.perPage}`;
+        }
+        if (this.currentPage > 1) {
+          url += `${this.perPage ? "&" : "?"}page=${this.currentPage}`;
+        }
+        const response = await axios.get(url);
+        this.orders = response.data.data.orders.data;
+        this.currentPage = response.data.data.orders.current_page;
+        this.rows = response.data.data.orders.total;
+
+        this.isBusy = false;
+      } catch (error) {
+        if (error.response) {
+          this.errors = error.response.data.errors;
+        }
+        this.isBusy = false;
+      }
+    },
+    editOrder(id) {
+      this.order = this.orders.find((order) => order.id == id);
+      this.modal = !this.modal;
+    },
+    async uploadData() {
+      const formData = new FormData();
+      let config = {
+        header: { "content-type": "multipart/form-data" }
+      };
+      this.isBusy = true;
+      let url = "orders";
+      if (this.order.quantity) {
+        formData.append("quantity", this.order.quantity);
+      }
+
+      if (!this.order.id) {
         try {
-          let url = "orders";
-          if (this.perPage) {
-            url += `?perPage=${this.perPage}`;
-          }
-          if (this.currentPage > 1) {
-            url += `${this.perPage ? "&" : "?"}page=${this.currentPage}`;
-          }
-          const response = await axios.get(url);
-          this.orders = response.data.data.orders.data;
-          this.currentPage = response.data.data.orders.current_page;
-          this.rows = response.data.data.orders.total;
-  
-          this.isBusy = false;
+          const response = await axios.post(url, formData, config);
+
+          this.hideModel();
         } catch (error) {
           if (error.response) {
             this.errors = error.response.data.errors;
           }
           this.isBusy = false;
         }
-      },
-      editOrder(id) {
-      this.order = this.orders.find((order) => order.id == id);
-      this.modal = !this.modal;
-    },
-    async uploadData() {
-        const formData = new FormData();
-        let config = {
-          header: { "content-type": "multipart/form-data" }
-        };
-        this.isBusy = true;
-        let url = "orders";
-        if (this.order.quantity) {
-          formData.append("quantity", this.order.quantity);
-        }
-       
+      } else {
+        formData.append("_method", "put");
+        try {
+          const response = await axios.post(
+            url + "/" + this.order.id,
+            formData,
+            config
+          );
 
-      
-        if (!this.order.id) {
-          try {
-            const response = await axios.post(url, formData, config);
-  
-            this.hideModel();
-          } catch (error) {
-            if (error.response) {
-              this.errors = error.response.data.errors;
-            }
-            this.isBusy = false;
+          this.hideModel();
+        } catch (error) {
+          if (error.response) {
+            this.errors = error.response.data.errors;
           }
-        } else {
-          formData.append("_method", "put");
-          try {
-            const response = await axios.post(
-              url + "/" + this.order.id,
-              formData,
-              config
-            );
-  
-            this.hideModel();
-          } catch (error) {
-            if (error.response) {
-              this.errors = error.response.data.errors;
-            }
-            this.isBusy = false;
-          }
+          this.isBusy = false;
         }
-      },
+      }
+    },
     deleteOrder(id) {
       Swal.fire({
         title: "Are you sure?",
@@ -130,10 +181,10 @@ export const useOrdersStore = defineStore("ordersStore", {
       return moment(value).format("D-MMM-Y");
     },
     setPerPage(value) {
-        this.perPage = value;
-        this.currentPage = 1;
-        this.getOrders();
-      },
+      this.perPage = value;
+      this.currentPage = 1;
+      this.getOrders();
+    },
     resetForm() {
       this.errors = {};
       this.order = {};
