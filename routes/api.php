@@ -38,7 +38,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('product_types', ProductTypeController::class);
     Route::resource('tailors', TailorController::class);
     Route::resource('orders', OrdersController::class);
-    
+    Route::get('/tailor_wise_order/{id}', [TailorController::class, 'orders']);
     
 });
 
