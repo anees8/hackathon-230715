@@ -27,7 +27,7 @@ class OrderSeeder extends Seeder
             $sku = $skus->random();
             $order = new Order();
     
-            $quantity = rand(1, 10); 
+            $quantity = rand(1,3); 
             $totalPrice = $sku->price * $quantity;
             
             $order->sku_id =  $sku->id;
