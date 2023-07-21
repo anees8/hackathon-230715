@@ -36,6 +36,7 @@ getProductTypes();
             <b-col><h5>Product Type List</h5></b-col>
             <b-col>
               <b-button
+              size="sm"
                 @click="modal = !modal"
                 class="float-end"
                 pill
@@ -102,6 +103,7 @@ getProductTypes();
             empty-filtered-text
             caption-top
             hover
+            small
             footClone
             :items="productTypes"
             :fields="fields"
@@ -114,6 +116,7 @@ getProductTypes();
             }}</template>
             <template #cell(actions)="data">
               <b-button
+              size="sm"
                 class="rounded-circle p-2 me-2"
                 @click="editProductType(data.item.id)"
                 variant="outline-success"
@@ -122,6 +125,7 @@ getProductTypes();
               </b-button>
 
               <b-button
+              size="sm"
                 class="rounded-circle p-2 me-2"
                 @click="deleteProductType(data.item.id)"
                 variant="outline-danger"
