@@ -7,14 +7,54 @@ export const useSkusStore = defineStore("skusStore", {
     skus: [],
     sku: {},
     fields: [
-      { key: "id", label: "ID" },
-      { key: "name", label: "Name" },
-      { key: "sku_code", label: "SKU Code" },
-      { key: "price", label: "Price" },
-      { key: "size", label: "Size" },
-      { key: "product_type", label: "Category" },
-      { key: "created_at", label: "Created Date" },
-      { key: "actions", label: "Action" }
+      {
+        key: "id",
+        label: "ID",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "name",
+        label: "Name",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "sku_code",
+        label: "SKU Code",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "price",
+        label: "Price",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "size",
+        label: "Size",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "product_type",
+        label: "Category",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "created_at",
+        label: "Created Date",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "actions",
+        label: "Action",
+        thClass: "text-center",
+        tdClass: "text-center"
+      }
     ],
     isBusy: false,
     modal: false,
@@ -27,89 +67,89 @@ export const useSkusStore = defineStore("skusStore", {
       { value: 10, text: "10" },
       { value: 50, text: "50" },
       { value: 100, text: "100" }
-    ],
+    ]
   }),
 
   actions: {
     async getSkus() {
-        this.isBusy = true;
+      this.isBusy = true;
+      try {
+        let url = "skus";
+        if (this.perPage) {
+          url += `?perPage=${this.perPage}`;
+        }
+        if (this.currentPage > 1) {
+          url += `${this.perPage ? "&" : "?"}page=${this.currentPage}`;
+        }
+        const response = await axios.get(url);
+        this.skus = response.data.data.skus.data;
+        this.currentPage = response.data.data.skus.current_page;
+        this.rows = response.data.data.skus.total;
+
+        this.isBusy = false;
+      } catch (error) {
+        if (error.response) {
+          this.errors = error.response.data.errors;
+        }
+        this.isBusy = false;
+      }
+    },
+    editSku(id) {
+      this.sku = this.skus.find((sku) => sku.id == id);
+      this.modal = !this.modal;
+    },
+    async uploadData() {
+      const formData = new FormData();
+      let config = {
+        header: { "content-type": "multipart/form-data" }
+      };
+      this.isBusy = true;
+      let url = "skus";
+      if (this.sku.name) {
+        formData.append("name", this.sku.name);
+      }
+      if (this.sku.sku_code) {
+        formData.append("sku_code", this.sku.sku_code.toUpperCase());
+      }
+      if (this.sku.price) {
+        formData.append("price", this.sku.price);
+      }
+      if (this.sku.size_id) {
+        formData.append("size_id", this.sku.size_id);
+      }
+      if (this.sku.product_type_id) {
+        formData.append("product_type_id", this.sku.product_type_id);
+      }
+
+      if (!this.sku.id) {
         try {
-          let url = "skus";
-          if (this.perPage) {
-            url += `?perPage=${this.perPage}`;
-          }
-          if (this.currentPage > 1) {
-            url += `${this.perPage ? "&" : "?"}page=${this.currentPage}`;
-          }
-          const response = await axios.get(url);
-          this.skus = response.data.data.skus.data;
-          this.currentPage = response.data.data.skus.current_page;
-          this.rows = response.data.data.skus.total;
-  
-          this.isBusy = false;
+          const response = await axios.post(url, formData, config);
+
+          this.hideModel();
         } catch (error) {
           if (error.response) {
             this.errors = error.response.data.errors;
           }
           this.isBusy = false;
         }
-      },
-    editSku(id) {
-      this.sku = this.skus.find((sku) => sku.id == id);
-      this.modal = !this.modal;
+      } else {
+        formData.append("_method", "put");
+        try {
+          const response = await axios.post(
+            url + "/" + this.sku.id,
+            formData,
+            config
+          );
+
+          this.hideModel();
+        } catch (error) {
+          if (error.response) {
+            this.errors = error.response.data.errors;
+          }
+          this.isBusy = false;
+        }
+      }
     },
-    async uploadData() {
-        const formData = new FormData();
-        let config = {
-          header: { "content-type": "multipart/form-data" }
-        };
-        this.isBusy = true;
-        let url = "skus";
-        if (this.sku.name) {
-          formData.append("name", this.sku.name);
-        }
-        if (this.sku.sku_code) {
-          formData.append("sku_code", this.sku.sku_code.toUpperCase());
-        }
-        if (this.sku.price) {
-          formData.append("price", this.sku.price);
-        }
-        if (this.sku.size_id) {
-          formData.append("size_id", this.sku.size_id);
-        }
-        if (this.sku.product_type_id) {
-          formData.append("product_type_id", this.sku.product_type_id);
-        }
-  
-        if (!this.sku.id) {
-          try {
-            const response = await axios.post(url, formData, config);
-  
-            this.hideModel();
-          } catch (error) {
-            if (error.response) {
-              this.errors = error.response.data.errors;
-            }
-            this.isBusy = false;
-          }
-        } else {
-          formData.append("_method", "put");
-          try {
-            const response = await axios.post(
-              url + "/" + this.sku.id,
-              formData,
-              config
-            );
-  
-            this.hideModel();
-          } catch (error) {
-            if (error.response) {
-              this.errors = error.response.data.errors;
-            }
-            this.isBusy = false;
-          }
-        }
-      },
     deleteSku(id) {
       Swal.fire({
         title: "Are you sure?",
@@ -140,10 +180,10 @@ export const useSkusStore = defineStore("skusStore", {
       return moment(value).format("D-MMM-Y");
     },
     setPerPage(value) {
-        this.perPage = value;
-        this.currentPage = 1;
-        this.getSkus();
-      },
+      this.perPage = value;
+      this.currentPage = 1;
+      this.getSkus();
+    },
     resetForm() {
       this.errors = {};
       this.sku = {};
