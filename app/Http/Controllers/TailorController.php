@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tailor;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Validator;
@@ -12,13 +13,22 @@ class TailorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request){
         
-    $data['tailors'] = Tailor::with('productTypes')->paginate($request->perPage);
-
-  
+        $data['tailors'] = Tailor::with('productTypes')->paginate($request->perPage);  
         return $this->sendResponse($data, 'Tailors return successfully.', Response::HTTP_OK);
+        
+    }
+
+    public function orders(Request $request,$id){
+
+        $tailorProductTypes=Tailor::with('productTypes')->Where('id',$id)->first()->productTypes->pluck('name');
+        
+        $data['orders']= Order::with(['sku.size','sku.product_type'])
+        ->whereHas('sku.product_type', function ($query) use ($tailorProductTypes) {
+            $query->whereIn('name', $tailorProductTypes);
+        })->Paginate($request->perPage);
+        return $this->sendResponse($data,'Orders return successfully.',Response::HTTP_OK);
     }
 
     /**
