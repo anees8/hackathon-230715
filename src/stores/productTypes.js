@@ -7,10 +7,30 @@ export const useProductTypesStore = defineStore("productTypesStore", {
     productTypes: [],
     productType: {},
     fields: [
-      { key: "id", label: "ID" },
-      { key: "name", label: "Name" },
-      { key: "created_at", label: "Created Date" },
-      { key: "actions", label: "Action" }
+      {
+        key: "id",
+        label: "ID",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "name",
+        label: "Name",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "created_at",
+        label: "Created Date",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "actions",
+        label: "Action",
+        thClass: "text-center",
+        tdClass: "text-center"
+      }
     ],
     isBusy: false,
     modal: false,
@@ -23,8 +43,7 @@ export const useProductTypesStore = defineStore("productTypesStore", {
       { value: 10, text: "10" },
       { value: 50, text: "50" },
       { value: 100, text: "100" }
-    ],
-    
+    ]
   }),
 
   actions: {
@@ -52,7 +71,9 @@ export const useProductTypesStore = defineStore("productTypesStore", {
       }
     },
     editProductType(id) {
-      this.productType = this.productTypes.find((productType) => productType.id == id);
+      this.productType = this.productTypes.find(
+        (productType) => productType.id == id
+      );
       this.modal = !this.modal;
     },
     async uploadData() {
@@ -113,7 +134,11 @@ export const useProductTypesStore = defineStore("productTypesStore", {
             .delete(url + id)
             .then((res) => {
               this.getProductTypes();
-              Swal.fire("Deleted!", "Product Type has been deleted.", "success");
+              Swal.fire(
+                "Deleted!",
+                "Product Type has been deleted.",
+                "success"
+              );
             })
             .catch((error) => {
               this.errors = error.response.data.errors;
