@@ -48,6 +48,15 @@ const router = createRouter({
         requireAuth: true,
     },
     },
+    
+    {
+      path: '/tailor/:id',
+      name: 'tailorview',
+      component: () => import('../views/Tailors/ViewTailorOrder.vue'),
+      meta: {
+        requireAuth: true,
+    },
+    },
     {
       path: '/orders',
       name: 'orders',
