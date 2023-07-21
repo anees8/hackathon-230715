@@ -7,6 +7,7 @@
             <b-col><h5>Tailors List</h5></b-col>
             <b-col>
               <b-button
+              size="sm"
                 @click="modal = !modal"
                 class="float-end"
                 pill
@@ -159,6 +160,7 @@
             empty-filtered-text
             caption-top
             hover
+            small
             footClone
             :items="tailors"
             :fields="fields"
@@ -167,18 +169,37 @@
             show-empty
           >
             <template #cell(product_types)="data">
-              <ul>
+            
+              <ul>   
                 <li
                   v-for="(product_type, index) in data.item.product_types"
                   :key="index"
                 >
-                  {{ product_type.name }}
+                  {{ product_type.name.toUpperCase() }}
                 </li>
+                
               </ul>
+          
             </template>
+            
             <template #cell(actions)="data">
+          <RouterLink
+          class="btn btn-outline-secondary me-2"
+          :to="{
+          name: 'tailorview',
+          params: {
+          id:data.item.id
+          }
+          }"
+          >
+          
+          <FontAwesomeIcon icon="eye" />
+          Order
+      
+          </RouterLink>
              
               <b-button
+              size="sm"
                 class="rounded-circle p-2 me-2"
                 @click="editTailor(data.item.id)"
                 variant="outline-success"
@@ -187,6 +208,7 @@
               </b-button>
 
               <b-button
+              size="sm"
                 class="rounded-circle p-2 me-2"
                 @click="deleteTailor(data.item.id)"
                 variant="outline-danger"
@@ -209,7 +231,7 @@
           <b-col xl="5" lg="6" md="8" class="p-2">
             <b-pagination
               v-if="rows / perPage > 1"
-              v-on:click="getSkus"
+              v-on:click="getTailors"
               v-model="currentPage"
               :total-rows="rows"
               :per-page="perPage"
@@ -224,7 +246,18 @@
 import { storeToRefs } from "pinia";
 
 import { useTailorsStore } from "../stores/tailors.js";
+
+import { useProductTypesStore } from "../stores/productTypes";
 const {
+  productTypes
+} = storeToRefs(useProductTypesStore());
+const {
+  getProductTypes,
+} = useProductTypesStore();
+
+
+const {
+  selectedProductType,
   tailors,
   tailor,
   fields,
@@ -237,6 +270,8 @@ const {
   rows
 } = storeToRefs(useTailorsStore());
 
+
+
 const {
   getTailors,
   setPerPage,
@@ -246,5 +281,7 @@ const {
   hideModel
 } = useTailorsStore();
 
+
+getProductTypes();
 getTailors();
 </script>
