@@ -36,6 +36,7 @@ getOrders();
             <b-col><h5>Orders List</h5></b-col>
             <b-col>
               <b-button
+              size="sm"
                 @click="modal = !modal"
                 class="float-end"
                 pill
@@ -101,6 +102,7 @@ getOrders();
             empty-filtered-text
             caption-top
             hover
+            small
             footClone
             :items="orders"
             :fields="fields"
@@ -108,12 +110,20 @@ getOrders();
             responsive
             show-empty
           >
-            <template #cell(product_id)="data">{{
-            data.item.sku.id
-            }}</template>
-            
+          <template #cell(product_id)="data">{{
+            data.item.sku.name
+            }} - ({{
+           (data.item.sku.sku_code)
+            }}) </template>
             
          
+            
+            <template #cell(product_type)="data">{{
+              data.item.sku.product_type.name
+            }}</template>
+            <template #cell(product_size)="data">{{
+              data.item.sku.size.name
+            }}</template>
             <template #cell(price)="data">{{
               data.item.sku.price
             }}</template>
@@ -125,6 +135,7 @@ getOrders();
             }}</template>
             <template #cell(actions)="data">
               <b-button
+              size="sm"
                 class="rounded-circle p-2 me-2"
                 @click="editOrder(data.item.id)"
                 variant="outline-success"
@@ -133,6 +144,7 @@ getOrders();
               </b-button>
 
               <b-button
+              size="sm"
                 class="rounded-circle p-2 me-2"
                 @click="deleteOrder(data.item.id)"
                 variant="outline-danger"
