@@ -5,11 +5,36 @@ import moment from "moment";
 export const useUsersStore = defineStore("usersStore", {
   state: () => ({
     fields: [
-      { key: "id", label: "ID" },
-      { key: "name", label: "Name" },
-      { key: "email", label: "Email" },
-      { key: "created_at", label: "Created Date" },
-      { key: "actions", label: "Action" }
+      {
+        key: "id",
+        label: "ID",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "name",
+        label: "Name",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "email",
+        label: "Email",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "created_at",
+        label: "Created Date",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
+        key: "actions",
+        label: "Action",
+        thClass: "text-center",
+        tdClass: "text-center"
+      }
     ],
     users: [],
     user: {},
