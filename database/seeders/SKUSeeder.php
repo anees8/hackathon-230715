@@ -15,25 +15,25 @@ class SKUSeeder extends Seeder
         
         $skus = [
             ['name' => 'Styched Font Yellow Tshirt','description'=>'Our graphic T-Shirts are, by far, the best that you can get your hands on! Easiest on the pocket and the best fabric that you can buy - Styched T-Shirts represent the youth - uncompromising, inspiring, young, unconventional and in a relentless pursuit to achieve greatness. A unique fusion technique...
-','sku_code' => 'SKU43830667116788','price' => 377.00, 'product_type_id'=>2,'size_id' => 1],
+','sku_code' => 'SKU43830667116788','price' => 350.00, 'product_type_id'=>2,'size_id' => 1],
             ['name' => 'Styched Font Yellow Tshirt','description'=>'Our graphic T-Shirts are, by far, the best that you can get your hands on! Easiest on the pocket and the best fabric that you can buy - Styched T-Shirts represent the youth - uncompromising, inspiring, young, unconventional and in a relentless pursuit to achieve greatness. A unique fusion technique...
-','sku_code' => 'SKU43830667116788','price' => 377.00, 'product_type_id'=>2,'size_id' => 2],
+','sku_code' => 'SKU43830667116788','price' => 350.00, 'product_type_id'=>2,'size_id' => 2],
             ['name' => 'Styched Font Yellow Tshirt','description'=>'Our graphic T-Shirts are, by far, the best that you can get your hands on! Easiest on the pocket and the best fabric that you can buy - Styched T-Shirts represent the youth - uncompromising, inspiring, young, unconventional and in a relentless pursuit to achieve greatness. A unique fusion technique...
-','sku_code' => 'SKU43830667116788','price' => 377.00, 'product_type_id'=>2,'size_id' => 3],
+','sku_code' => 'SKU43830667116788','price' => 350.00, 'product_type_id'=>2,'size_id' => 3],
             ['name' => 'Styched Font Yellow Tshirt','description'=>'Our graphic T-Shirts are, by far, the best that you can get your hands on! Easiest on the pocket and the best fabric that you can buy - Styched T-Shirts represent the youth - uncompromising, inspiring, young, unconventional and in a relentless pursuit to achieve greatness. A unique fusion technique...
-','sku_code' => 'SKU43830667116788','price' => 377.00, 'product_type_id'=>2,'size_id' => 4],
+','sku_code' => 'SKU43830667116788','price' => 350.00, 'product_type_id'=>2,'size_id' => 4],
             ['name' => 'Styched Font Yellow Tshirt','description'=>'Our graphic T-Shirts are, by far, the best that you can get your hands on! Easiest on the pocket and the best fabric that you can buy - Styched T-Shirts represent the youth - uncompromising, inspiring, young, unconventional and in a relentless pursuit to achieve greatness. A unique fusion technique...
-','sku_code' => 'SKU43830667116788','price' => 377.00, 'product_type_id'=>2,'size_id' => 5],
+','sku_code' => 'SKU43830667116788','price' => 350.00, 'product_type_id'=>2,'size_id' => 5],
             ['name' => 'Aag Laga Denge Graphic Printed Black Tshirt','description'=>'Our graphic T-Shirts are, by far, the best that you can get your hands on! Easiest on the pocket and the best fabric that you can buy - Styched T-Shirts represent the new India - uncompromising, inspiring, young, unconventional and in a relentless pursuit to achieve greatness. The T-Shirts are...
-','sku_code' => 'SKU39389597630648','price' => 400.00, 'product_type_id'=>2,'size_id' => 1],
+','sku_code' => 'SKU39389597630648','price' => 450.00, 'product_type_id'=>2,'size_id' => 1],
             ['name' => 'Aag Laga Denge Graphic Printed Black Tshirt','description'=>'Our graphic T-Shirts are, by far, the best that you can get your hands on! Easiest on the pocket and the best fabric that you can buy - Styched T-Shirts represent the new India - uncompromising, inspiring, young, unconventional and in a relentless pursuit to achieve greatness. The T-Shirts are...
-','sku_code' => 'SKU39389597630648','price' => 400.00, 'product_type_id'=>2,'size_id' => 2],
+','sku_code' => 'SKU39389597630648','price' => 450.00, 'product_type_id'=>2,'size_id' => 2],
             ['name' => 'Aag Laga Denge Graphic Printed Black Tshirt','description'=>'Our graphic T-Shirts are, by far, the best that you can get your hands on! Easiest on the pocket and the best fabric that you can buy - Styched T-Shirts represent the new India - uncompromising, inspiring, young, unconventional and in a relentless pursuit to achieve greatness. The T-Shirts are...
-','sku_code' => 'SKU39389597630648','price' => 400.00, 'product_type_id'=>2,'size_id' => 3],
+','sku_code' => 'SKU39389597630648','price' => 450.00, 'product_type_id'=>2,'size_id' => 3],
             ['name' => 'Aag Laga Denge Graphic Printed Black Tshirt','description'=>'Our graphic T-Shirts are, by far, the best that you can get your hands on! Easiest on the pocket and the best fabric that you can buy - Styched T-Shirts represent the new India - uncompromising, inspiring, young, unconventional and in a relentless pursuit to achieve greatness. The T-Shirts are...
-','sku_code' => 'SKU39389597630648','price' => 400.00, 'product_type_id'=>2,'size_id' => 4],
+','sku_code' => 'SKU39389597630648','price' => 450.00, 'product_type_id'=>2,'size_id' => 4],
             ['name' => 'Aag Laga Denge Graphic Printed Black Tshirt','description'=>'Our graphic T-Shirts are, by far, the best that you can get your hands on! Easiest on the pocket and the best fabric that you can buy - Styched T-Shirts represent the new India - uncompromising, inspiring, young, unconventional and in a relentless pursuit to achieve greatness. The T-Shirts are...
-','sku_code' => 'SKU39389597630648','price' => 400.00, 'product_type_id'=>2,'size_id' => 5],
+','sku_code' => 'SKU39389597630648','price' => 450.00, 'product_type_id'=>2,'size_id' => 5],
             // Add more dummy SKUs as needed
         ];
 
