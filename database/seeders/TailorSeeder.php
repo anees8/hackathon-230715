@@ -37,7 +37,7 @@ class TailorSeeder extends Seeder
             ],
             // Add more dummy tailors as needed
         ];
-
+        
         foreach ($tailors as $tailor) {
             Tailor::create($tailor);
         }
