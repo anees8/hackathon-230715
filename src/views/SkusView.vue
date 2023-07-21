@@ -7,6 +7,7 @@
             <b-col><h5>SKUS List</h5></b-col>
             <b-col>
               <b-button
+              size="sm"
                 @click="modal = !modal"
                 class="float-end"
                 pill
@@ -149,6 +150,7 @@
             empty-filtered-text
             caption-top
             hover
+            small
             footClone
             :items="skus"
             :fields="fields"
@@ -163,6 +165,7 @@
             }}</template>
             <template #cell(actions)="data">
               <b-button
+              size="sm"
                 class="rounded-circle p-2 me-2"
                 @click="editSku(data.item.id)"
                 variant="outline-success"
@@ -171,6 +174,7 @@
               </b-button>
 
               <b-button
+              size="sm"
                 class="rounded-circle p-2 me-2"
                 @click="deleteSku(data.item.id)"
                 variant="outline-danger"
