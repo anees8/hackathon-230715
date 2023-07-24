@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tailor;
 use App\Models\Order;
 use App\Models\OrderTailor;
-use App\Models\Tailor;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Validator;
@@ -14,54 +14,52 @@ class TailorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
-
-        $data['tailors'] = Tailor::with('productTypes')->paginate($request->perPage);
+    public function index(Request $request){
+        
+        $data['tailors'] = Tailor::with('productTypes')->paginate($request->perPage);  
         return $this->sendResponse($data, 'Tailors return successfully.', Response::HTTP_OK);
-
+        
     }
 
-    public function orders(Request $request, $id)
-    {
+    public function orders(Request $request,$id){
 
-        $tailorProductTypes = Tailor::with('productTypes')->Where('id', $id)->first()->productTypes->pluck('name');
-
-        $data['orders'] = Order::with(['tailor_order', 'sku.size', 'sku.product_type'])->whereDoesntHave('tailor_order', function ($query) use ($id) {
+        $tailorProductTypes=Tailor::with('productTypes')->Where('id',$id)->first()->productTypes->pluck('name');
+        
+        $data['orders']= Order::with(['tailor_order','sku.size','sku.product_type'])->whereDoesntHave('tailor_order', function ($query) use ($id){
             $query->where('status', 1)->orwhere('tailor_id', $id);
-
+    
         })->whereHas('sku.product_type', function ($query) use ($tailorProductTypes) {
             $query->whereIn('name', $tailorProductTypes);
         })->orderBy('orders.id')->Paginate($request->perPage);
 
-        return $this->sendResponse($data, 'Orders return successfully.', Response::HTTP_OK);
+        return $this->sendResponse($data,'Orders return successfully.',Response::HTTP_OK);
     }
 
-    public function accepted_orders(Request $request, $id)
-    {
 
-        $tailorProductTypes = Tailor::with('productTypes')->Where('id', $id)->first()->productTypes->pluck('name');
+public function accepted_orders(Request $request,$id){
 
-        $data['orders'] = Order::with(['tailor_order', 'sku.size', 'sku.product_type'])->whereDoesntHave('tailor_order', function ($query) use ($id) {
-            $query->where('status', 1)->orwhere('tailor_id', $id);
-
+  $tailorProductTypes=Tailor::with('productTypes')->Where('id',$id)->first()->productTypes->pluck('name');
+        
+        $data['orders']= Order::with(['tailor_order','sku.size','sku.product_type'])->whereHas('tailor_order', function ($query) use ($id){
+            $query->where('status', 1)->where('tailor_id', $id);
+    
         })->whereHas('sku.product_type', function ($query) use ($tailorProductTypes) {
             $query->whereIn('name', $tailorProductTypes);
         })->orderBy('orders.id')->Paginate($request->perPage);
 
-        return $this->sendResponse($data, 'Orders return successfully.', Response::HTTP_OK);
-    }
+        return $this->sendResponse($data,'Orders return successfully.',Response::HTTP_OK);
+}
 
-    public function orderAssign(Request $request)
-    {
-
-        $order = OrderTailor::create([
+    Public function orderAssign(Request $request){
+    
+        $order=OrderTailor::create([
             'tailor_id' => $request->tailor_id,
             'order_id' => $request->order_id,
             'status' => $request->status,
-        ]);
-        return $this->sendResponse($order, 'Tailor register successfully.', Response::HTTP_CREATED);
+        ]);       
+                return $this->sendResponse($order, 'Tailor register successfully.', Response::HTTP_CREATED);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -77,16 +75,18 @@ class TailorController extends Controller
     public function store(Request $request)
     {
 
+       
+
         $validator = Validator::make($request->all(), [
             'name' => [
                 'required', 'min:2',
             ],
             'phone' => [
                 'required', 'digits_between:10,10', 'unique:tailors,phone,',
-            ],
-
+            ], 
+            
             'address' => [
-                'required', 'min:5',
+                'required', 'min:5'
             ],
             'email' => [
                 'email', 'unique:tailors,email',
@@ -140,14 +140,14 @@ class TailorController extends Controller
                 'required', 'min:2',
             ],
             'phone' => [
-                'required', 'digits_between:10,10', 'unique:tailors,phone,' . $tailor->id,
-            ],
-
+                'required', 'digits_between:10,10', 'unique:tailors,phone,'. $tailor->id
+            ], 
+            
             'address' => [
-                'required', 'min:5',
+                'required', 'min:5'
             ],
             'email' => [
-                'email', 'unique:tailors,email,' . $tailor->id,
+                'email', 'unique:tailors,email,'. $tailor->id
             ],
             'commission_limit' => [
                 'max:1111',
@@ -161,15 +161,18 @@ class TailorController extends Controller
             return $this->sendError('Validation Error.', $validator->errors(), Response::HTTP_BAD_REQUEST);
         }
 
-        $tailor->name = $request->name;
-        $tailor->email = $request->email;
-        $tailor->phone = $request->phone;
-        $tailor->address = $request->address;
-        $tailor->commission_limit = $request->commission_limit;
-        $tailor->max_units_per_day = $request->max_units_per_day;
+        $tailor->name =  $request->name;    
+        $tailor->email =  $request->email;   
+        $tailor->phone =  $request->phone;  
+        $tailor->address =  $request->address;  
+        $tailor->commission_limit =  $request->commission_limit;  
+        $tailor->max_units_per_day =  $request->max_units_per_day;          
         $tailor->update();
-        return $this->sendResponse('Tailor Updated Successfully.', Response::HTTP_OK);
+        return $this->sendResponse('Tailor Updated Successfully.',Response::HTTP_OK);
 
+
+
+        
     }
 
     /**
@@ -178,6 +181,6 @@ class TailorController extends Controller
     public function destroy(Tailor $tailor)
     {
         $tailor->delete();
-        return $this->sendResponse('Taolor Deleted Successfully.', Response::HTTP_OK);
+        return $this->sendResponse('Taolor Deleted Successfully.',Response::HTTP_OK);
     }
 }
