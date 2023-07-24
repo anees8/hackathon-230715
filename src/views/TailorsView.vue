@@ -184,6 +184,19 @@
             
             <template #cell(actions)="data">
           <RouterLink
+          class="btn btn-outline-success me-2"
+          :to="{
+          name: 'tailoraccept',
+          params: {
+          id:data.item.id
+          }
+          }"
+          >
+          
+          <FontAwesomeIcon icon="eye" />
+        Accept  Orders
+          </RouterLink>
+          <RouterLink
           class="btn btn-outline-secondary me-2"
           :to="{
           name: 'tailorview',
@@ -194,7 +207,7 @@
           >
           
           <FontAwesomeIcon icon="eye" />
-          Order
+          All Orders
       
           </RouterLink>
              
