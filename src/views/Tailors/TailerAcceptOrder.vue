@@ -67,28 +67,7 @@ getOrders(tailorID);
             <template #cell(total_commission)="data">{{
               data.item.quantity * Math.floor(((data.item.sku.price)*(1/6)),2)
             }}</template>
-            <template #cell(actions)="data"> 
-              
-              
-              <b-button
-                class="rounded p-2 me-2"
-                size="sm"
-                variant="outline-success"
-                @click="acceptOrder(data.item.id,tailorID,1)"
-
-              >
-                <FontAwesomeIcon icon="check" /> Accept
-              </b-button>
-              <b-button
-                class="rounded p-2 me-2"
-                size="sm"
-                variant="outline-danger"
-                @click="acceptOrder(data.item.id,tailorID,0)" 
-              >
-                <FontAwesomeIcon icon="xmark" /> Reject
-              </b-button>
-              
-              </template>
+           
         </b-table
         ></b-col>
         <b-row align-h="end" class="mt-5">

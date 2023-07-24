@@ -54,12 +54,7 @@ export const useTailorAcceptedOrdersStore = defineStore("tailoracceptedordersSto
         thClass: "text-center",
         tdClass: "text-center"
       },
-      {
-        key: "actions",
-        label: "Action",
-        thClass: "text-center",
-        tdClass: "text-center"
-      }
+      
     ],
 
     isBusy: false,
