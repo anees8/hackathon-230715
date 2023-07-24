@@ -14,7 +14,7 @@ class OrdersController extends Controller
      */
     public function index(Request $request)
     {
-        $data['orders']= Order::with(['sku.size','sku.product_type','tailor'])->Paginate($request->perPage);
+        $data['orders']= Order::with(['sku.size','sku.product_type'])->Paginate($request->perPage);
         return $this->sendResponse($data, 'Orders return successfully.',Response::HTTP_OK);
     }
 
