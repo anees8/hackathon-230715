@@ -58,6 +58,14 @@ const router = createRouter({
     },
     },
     {
+      path: '/tailoraccept/:id',
+      name: 'tailoraccept',
+      component: () => import('../views/Tailors/TailerAcceptOrder.vue'),
+      meta: {
+        requireAuth: true,
+    },
+    },
+    {
       path: '/orders',
       name: 'orders',
       component: () => import('../views/OrdersView.vue'),
