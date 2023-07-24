@@ -1,10 +1,14 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import moment from "moment";
+import { useRoute } from 'vue-router';
+
 
 export const useTailorOrdersStore = defineStore("tailorordersStore", {
+  
   state: () => ({
     orders: [],
+    tailor_id:useRoute().params.id,
     fields: [
       {
         key: "id",
@@ -58,7 +62,6 @@ export const useTailorOrdersStore = defineStore("tailorordersStore", {
     ],
 
     isBusy: false,
-    modal: false,
     errors: {},
     perPage: 10,
     currentPage: 1,
@@ -72,7 +75,9 @@ export const useTailorOrdersStore = defineStore("tailorordersStore", {
   }),
 
   actions: {
+    
     async getOrders(id) {
+     
       this.isBusy = true;
       try {
         let url = "tailor_wise_order/"+id;
@@ -99,20 +104,35 @@ export const useTailorOrdersStore = defineStore("tailorordersStore", {
     setPerPage(value) {
       this.perPage = value;
       this.currentPage = 1;
-      this.getOrders();
-    },
-    resetForm() {
-      this.errors = {};
+    },  
+   
+   
+    async acceptOrder(order_id,tailor_id,status){
+      this.isBusy = true;
+      try {
+        const formData = new FormData();
+        let url = "order_assign";
+        if (order_id) {
+          formData.append("order_id", order_id);
+        }
+        if (tailor_id) {
+          formData.append("tailor_id", tailor_id);
+        }
 
-      this.isBusy = false;
-    },
-    hideModel() {
-      this.getOrders();
-      this.resetForm();
-    },
-    acceptOrder(id,tailorID,status){
-      console.log(id,tailorID,status)
-    
+      
+          formData.append("status", status);
+      
+        
+        const response = await axios.post(url,formData);
+        this.getOrders(this.tailor_id);
+        this.isBusy = false;
+      } catch (error) {
+        if (error.response) {
+          this.errors = error.response.data.errors;
+        }
+        this.isBusy = false;
+      }
+      
     }
   }
 });
