@@ -29,8 +29,10 @@ getOrders(tailorID);
       <b-card>
         <b-col>
           <b-row align-v="center">
-            <b-col><h5>Orders List - ( TOTAL : {{ rows }})</h5></b-col>
+            <b-col><h5>Orders List - ( TOTAL : {{ rows??0 }})</h5></b-col>
+          
           </b-row>
+        
         </b-col>
         <b-col
           ><b-table
@@ -108,7 +110,7 @@ getOrders(tailorID);
           <b-col xl="5" lg="6" md="8" class="p-2">
             <b-pagination
               v-if="rows / perPage > 1"
-              v-on:click="getOrders"
+              v-on:click="getOrders(tailorID)"
               v-model="currentPage"
               :total-rows="rows"
               :per-page="perPage"
