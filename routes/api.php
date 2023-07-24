@@ -39,7 +39,9 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('tailors', TailorController::class);
     Route::resource('orders', OrdersController::class);
     Route::get('/tailor_wise_order/{id}', [TailorController::class, 'orders']);
+    Route::get('/tailor_wise_accepted_order/{id}', [TailorController::class, 'accepted_orders']);
     
+    Route::post('/order_assign', [TailorController::class, 'orderAssign']);    
 });
 
 
