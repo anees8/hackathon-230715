@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('phone')->unique();
+            $table->string('password');
             $table->text('address');
             $table->string('email')->nullable()->unique();
             $table->decimal('commission_limit', 8, 2)->default(1111);
