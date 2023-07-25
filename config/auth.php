@@ -40,9 +40,13 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'api' => [
+        'user' => [
             'driver' => 'passport',
             'provider' => 'users',
+        ],
+        'tailor' => [
+            'driver' => 'passport',
+            'provider' => 'tailors',
         ],
     ],
 
@@ -64,10 +68,15 @@ return [
     */
 
     'providers' => [
+         'tailors' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Tailor::class,
+        ],
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+       
 
         // 'users' => [
         //     'driver' => 'database',
