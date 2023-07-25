@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Tailor;
 use Symfony\Component\HttpFoundation\Response;
 use Validator;
 
@@ -55,6 +57,35 @@ public function login(Request $request){
 public function logout(Request $request){        
         $request->user()->token()->revoke();
         return $this->sendResponse('User Successfully logged out.',Response::HTTP_OK);
+}
+
+public function tailor_login(Request $request){
+    $validator = Validator::make($request->all(), [
+        'phone' => 'required|numeric|digits_between:10,10',
+        'password' => 'required',
+    ]);
+
+    if($validator->fails()){
+        return $this->sendError('Validation Error.', $validator->errors(), Response::HTTP_BAD_REQUEST);       
+    }
+    $userExists = Tailor::where('phone',$request['phone'])->first();    
+
+    if (!Hash::check($request['password'], $userExists->password)) {
+        return $this->sendError('Invalid Credential.',['error'=>'Invalid Credential'], Response::HTTP_BAD_REQUEST);          
+    }
+
+
+    $data['user'] = Tailor::where('phone', $request['phone'])->firstOrFail();
+    $data['token'] = $data['user']->createToken('tailor')->accessToken;   
+    $data['token_type'] ='Bearer';
+
+    return $this->sendResponse($data, 'Login Successfully.',Response::HTTP_OK);
+}
+
+public function tailor_logout(Request $request){  
+          
+      $request->user()->token()->revoke();
+  return $this->sendResponse('User Successfully logged out.',Response::HTTP_OK);
 }
 
 
