@@ -182,9 +182,9 @@
           
             </template>
             
-            <template #cell(actions)="data">
+            <template #cell(show)="data">
           <RouterLink
-          class="btn btn-outline-success me-2"
+          class="btn btn-outline-success  btn-sm"
           :to="{
           name: 'tailoraccept',
           params: {
@@ -194,10 +194,11 @@
           >
           
           <FontAwesomeIcon icon="eye" />
-        Accept  Orders
+        Accepted
           </RouterLink>
+          
           <RouterLink
-          class="btn btn-outline-secondary me-2"
+          class="btn btn-outline-secondary my-1 btn-sm"
           :to="{
           name: 'tailorview',
           params: {
@@ -207,13 +208,15 @@
           >
           
           <FontAwesomeIcon icon="eye" />
-          All Orders
+          All
       
           </RouterLink>
-             
+</template>
+            
+<template #cell(actions)="data"> 
               <b-button
               size="sm"
-                class="rounded-circle p-2 me-2"
+                class="rounded-circle p-2 "
                 @click="editTailor(data.item.id)"
                 variant="outline-success"
               >
@@ -222,7 +225,7 @@
 
               <b-button
               size="sm"
-                class="rounded-circle p-2 me-2"
+                class="rounded-circle p-2 my-1"
                 @click="deleteTailor(data.item.id)"
                 variant="outline-danger"
               >

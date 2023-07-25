@@ -63,6 +63,12 @@ export const useTailorsStore = defineStore("tailorsStore", {
         tdClass: "text-center"
       },
       {
+        key: "show",
+        label: "View Orders",
+        thClass: "text-center",
+        tdClass: "text-center"
+      },
+      {
         key: "actions",
         label: "Action",
         thClass: "text-center",
