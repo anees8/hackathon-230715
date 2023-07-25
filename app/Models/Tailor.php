@@ -5,10 +5,12 @@ use App\Models\Order;
 use App\Models\OrderTailor;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Tailor extends Model
+class Tailor extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory,HasApiTokens;
     protected $guarded = [];
     
 
