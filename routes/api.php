@@ -26,12 +26,14 @@ use App\Http\Controllers\OrdersController;
 
 // Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('tailor/login', [AuthController::class, 'tailor_login']);
 
 
 
-
-Route::middleware('auth:api')->group(function () {
+Route::middleware('auth:user')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+   
+
     Route::resource('users', UsersController::class);
     Route::resource('sizes', SizeController::class);
     Route::resource('skus', SkuController::class);
@@ -40,10 +42,12 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('orders', OrdersController::class);
     Route::get('/tailor_wise_order/{id}', [TailorController::class, 'orders']);
     Route::get('/tailor_wise_accepted_order/{id}', [TailorController::class, 'accepted_orders']);
-    
     Route::post('/order_assign', [TailorController::class, 'orderAssign']);    
 });
 
+Route::middleware('auth:tailor')->group(function () {
+    Route::post('tailor/logout', [AuthController::class, 'tailor_logout']);  
+});
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
